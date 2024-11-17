@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import Book
+from .models import Book,Address,Student
+from django.db.models import Q,Min,Max,Avg,Count,Sum
+
 
 def index2(request, val1 = 0):
     return render(request, "bookmodule/index2.html", {"value":val1})
@@ -60,8 +62,39 @@ def simple_query(request):
     return render(request, 'bookmodule/bookList.html', {'books': mybooks})
 
 def complex_query(request):
-    mybooks=books=Book.objects.filter(author__isnull = False).filter(title__icontains='and').filter(edition__gte = 2).exclude(price__lte = 100)[:10]
+    mybooks=Book.objects.filter(author__isnull = False).filter(title__icontains='and').filter(edition__gte = 2).exclude(price__lte = 50)[:10]
     if len(mybooks)>=1:
         return render(request, 'bookmodule/bookList.html', {'books':mybooks})
     else:
         return render(request, 'bookmodule/index.html')
+
+
+def task1(request):
+    books = Book.objects.filter(Q(price__lte = 60))
+    return render(request, 'bookmodule/bookList.html', {'books':books})
+
+def task2(request):
+    books =  Book.objects.filter(Q(edition__gt = 2)&(Q(title__contains = 'qu') | Q(author__contains = 'qu')) )
+    return render(request, 'bookmodule/bookList.html', {'books':books})
+
+def task3(request):
+    books =  Book.objects.filter( ~Q(edition__gt = 2)&(~ Q(title__contains = 'qu') | ~ Q(author__contains = 'qu')) )
+    return render(request, 'bookmodule/bookList.html', {'books':books})
+
+def task4(request):
+    books = Book.objects.order_by('title')
+    return render(request, 'bookmodule/bookList.html', {'books':books})
+
+def task5(request):
+    #query = Book.objects.aggregate(count = Count('id',default=0), total=Sum('price', default=0), average=Avg('price',default=0), max=Max('price',default=0), =Min('price',default=0))
+    count = Book.objects.aggregate(Count('id'))
+    sum = Book.objects.aggregate(Sum('price', default=0))
+    avg = Book.objects.aggregate(Avg('price', default=0))
+    max = Book.objects.aggregate(Max('price', default=0))
+    min = Book.objects.aggregate(Min('price', default=0))
+    print (count,sum,max)
+    return render(request, 'bookmodule/task5.html', {'count':count , 'sum':sum ,'avg':avg,'max':max,'min':min})
+
+def task7(request):
+    objs = Address.objects.annotate( count=Count('student'))
+    return render(request, 'bookmodule/task7.html', {'objs':objs})

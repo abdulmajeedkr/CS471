@@ -1,0 +1,14 @@
+{% extends "bookmodule/layouts/base.html" %}
+{% block stylesheets %}
+ul li:not(:last-child) {
+    margin-bottom: 15px;
+}
+{% endblock stylesheets %}
+{% block content %}
+<h1>Sums of Books</h1>
+<p>the count is : {{ count.id__count }}</p><br>
+<p>the sum is : {{ sum.price__sum }}</p><br>
+<p>the average is : {{ avg.price__avg }}</p><br>
+<p>the maximum is : {{ max.price__max }}</p><br>
+<p>the minimum is : {{ min.price__min }}</p><br>
+{% endblock content %}

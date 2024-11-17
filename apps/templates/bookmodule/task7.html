@@ -1,0 +1,13 @@
+{% extends "bookmodule/layouts/base.html" %}
+{% block stylesheets %}
+ul li:not(:last-child) {
+    margin-bottom: 15px;
+}
+{% endblock stylesheets %}
+{% block content %}
+<h1>studends for each city</h1>
+{% for address in objs %}
+    <h2>City: {{ address.city }}</h2>
+    <p>Number of studens: {{ address.count }}</p>
+{% endfor %}
+{% endblock content %}
