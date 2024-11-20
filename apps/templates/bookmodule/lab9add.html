@@ -1,0 +1,19 @@
+{% extends "bookmodule/layouts/base.html" %}
+{% block stylesheets %}
+ul li:not(:last-child) {
+    margin-bottom: 15px;
+}
+{% endblock stylesheets %}
+{% block content %}
+<h1>Add a New Book</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label>Title: <input type="text" name="title" required></label><br>
+    <label>Author: <input type="text" name="author" required></label><br>
+    <label>Price: <input type="number" step="0.01" name="price" required></label><br>
+    <label>edition: <input type="number" step="0" name="edition" required></label><br>
+    <button type="submit">Add Book</button>
+</form>
+
+
+{% endblock content %}

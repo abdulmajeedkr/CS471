@@ -1,0 +1,57 @@
+{% extends "bookmodule/layouts/base.html" %}
+{% block stylesheets %}
+ul li:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.bluebutton {
+    display: block;
+    width: 75px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+}
+.greenbutton {
+    display: block;
+    width: 75px;
+    height: 25px;
+    background: #00A86B;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+}
+.redbutton {
+    display: block;
+    width: 75px;
+    height: 25px;
+    background: #BF0000;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+}
+{% endblock stylesheets %}
+{% block content %}
+<h1>Book List</h1>
+<a href="/books/lab9_part1/addbook" class="greenbutton">Add Book</a>
+<ul>
+    {% for book in books %}
+        <li>
+            {{ book.title }} by {{ book.author }}
+            <a href="/books/lab9_part1/editbook/{{ book.id }}" class="bluebutton">Edit</a>
+            <a href="/books/lab9_part1/deletebook/{{ book.id }}" class="redbutton">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

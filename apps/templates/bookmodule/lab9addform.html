@@ -1,0 +1,14 @@
+{% extends "bookmodule/layouts/base.html" %}
+{% block stylesheets %}
+ul li:not(:last-child) {
+    margin-bottom: 15px;
+}
+{% endblock stylesheets %}
+{% block content %}
+<h1>Add a New Book</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Book</button>
+</form>
+{% endblock content %}
